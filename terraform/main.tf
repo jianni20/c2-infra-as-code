@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "proxmox" {
-  pm_api_url      = pm.pm_api_url
+  pm_api_url      = var.pm_api_url
   pm_tls_insecure = true
 
   pm_api_token_id     = var.pm_api_token_id
@@ -25,8 +25,9 @@ resource "proxmox_lxc" "ct-sliver" {
   hostname = "ct-sliver"
   network {
     name   = "eth0"
-    bridge = "vmbr1"
-    ip     = "dhcp"
+    bridge = "vmbr3"
+    ip     = "172.31.0.10/24"
+    gw     = "172.31.0.1"
   }
   rootfs {
     replicate = false
@@ -38,4 +39,8 @@ resource "proxmox_lxc" "ct-sliver" {
   target_node  = "pve"
   unprivileged = true
   start        = true
+
+  ssh_public_keys = <<EOF
+  ${var.ssh_key}
+  EOF
 }

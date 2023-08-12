@@ -2,7 +2,7 @@
 ## Provider variables
 ############################################
 variable "pm_api_url" {
-  type = string
+  type      = string
   sensitive = true
 }
 
@@ -20,6 +20,11 @@ variable "pm_api_token_secret" {
 ## Resource variables
 ############################################
 variable "root_password" {
+  type      = string
+  sensitive = true
+}
+
+variable "ssh_key" {
   type      = string
   sensitive = true
 }
